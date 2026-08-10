@@ -1,0 +1,16 @@
+@model UniManage.Models.Message
+@{
+    ViewBag.Title = "Message Details";
+}
+
+<h2>@Model.Subject</h2>
+<p><strong>From:</strong> @Model.FromUser?.FullName</p>
+<p><strong>To:</strong> @Model.ToUser?.FullName</p>
+<p><strong>Sent:</strong> @Model.SentOn.ToLocalTime().ToString("g")</p>
+<hr />
+<div>
+    @Html.Raw(Model.Body?.Replace("\n", "<br />"))
+</div>
+<p>
+    @Html.ActionLink("Back to Inbox", "Inbox", "Message", null, new { @class = "btn btn-default" })
+</p>

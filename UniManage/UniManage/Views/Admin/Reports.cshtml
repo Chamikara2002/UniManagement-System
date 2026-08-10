@@ -1,0 +1,27 @@
+@model UniManage.ViewModels.AdminDashboardViewModel
+@{
+    ViewBag.Title = "Admin Reports";
+}
+
+<h2>Reports</h2>
+
+<p>Total users: <strong>@Model.TotalUsers</strong></p>
+<p>Total students: <strong>@Model.TotalStudents</strong></p>
+<p>Total lecturers: <strong>@Model.TotalLecturers</strong></p>
+<p>Total courses: <strong>@Model.TotalCourses</strong></p>
+<p>Total enrollments: <strong>@Model.TotalEnrollments</strong></p>
+
+<h4>Recent Courses</h4>
+@if (Model.RecentCourses != null && Model.RecentCourses.Any())
+{
+    <ul>
+        @foreach (var c in Model.RecentCourses)
+        {
+            <li>@c.Title (@c.Code) - @(c.Lecturer != null && c.Lecturer.User != null ? c.Lecturer.User.FullName : "TBA")</li>
+        }
+    </ul>
+}
+else
+{
+    <p>No recent courses.</p>
+}

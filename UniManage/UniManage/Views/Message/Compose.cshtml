@@ -1,0 +1,39 @@
+@model UniManage.ViewModels.ComposeMessageViewModel
+@{
+    ViewBag.Title = "Compose Message";
+}
+
+<h2>Compose Message</h2>
+
+@using (Html.BeginForm("Compose", "Message", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.LabelFor(m => m.ToUserId, "To", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.ToUserId, (SelectList)ViewBag.Recipients, "Select recipient", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.ToUserId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Subject, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Subject, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Subject, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Body, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(m => m.Body, new { @class = "form-control", rows = 6 })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="submit" class="btn btn-primary">Send</button>
+        </div>
+    </div>
+}

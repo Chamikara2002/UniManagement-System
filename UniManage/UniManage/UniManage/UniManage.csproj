@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <!-- Disable automatic inclusion of default Compile/Content items so we can explicitly control
+         which files are shown in Solution Explorer when some IDEs do not refresh implicit items. -->
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableDefaultContentItems>false</EnableDefaultContentItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Controllers\**\*.cs" />
+    <Compile Include="Models\**\*.cs" />
+    <Compile Include="Services\**\*.cs" />
+    <Compile Include="ViewModels\**\*.cs" />
+    <Compile Include="Helpers\**\*.cs" />
+    <Compile Include="Filters\**\*.cs" />
+    <Compile Include="Data\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Views\**\*.cshtml" />
+    <Content Include="wwwroot\**\*" />
+    <None Include="appsettings.json" />
+  </ItemGroup>
+</Project>

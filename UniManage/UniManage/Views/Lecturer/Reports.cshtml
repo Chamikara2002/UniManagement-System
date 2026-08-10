@@ -1,0 +1,33 @@
+@model dynamic
+@{
+    ViewBag.Title = "Reports";
+}
+
+<h2>Reports</h2>
+
+@if (Model != null)
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Course</th>
+                <th>Enrolled</th>
+                <th>Assignments</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var r in Model)
+            {
+                <tr>
+                    <td>@r.Title</td>
+                    <td>@r.Enrolled</td>
+                    <td>@r.Assignments</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No report data.</p>
+}

@@ -1,0 +1,37 @@
+@model IEnumerable<UniManage.Models.Assignment>
+@{
+    ViewBag.Title = "My Assignments";
+}
+
+<h2>My Assignments</h2>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Course</th>
+                <th>Title</th>
+                <th>Due Date</th>
+                <th>Points</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var a in Model)
+            {
+                <tr>
+                    <td>@(a.Course != null ? a.Course.Title : "")</td>
+                    <td>@a.Title</td>
+                    <td>@a.DueDate.ToLocalTime().ToString("g")</td>
+                    <td>@a.Points</td>
+                    <td>@Html.ActionLink("Submit", "Submit", "Assignment", new { id = a.Id }, new { @class = "btn btn-primary btn-sm" })</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No assignments found.</p>
+}

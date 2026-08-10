@@ -1,0 +1,34 @@
+@model UniManage.ViewModels.EnrollmentSummaryViewModel
+@{
+    ViewBag.Title = "Enrollment Summary";
+}
+
+<h2>Enrollment Summary</h2>
+
+<p>Total enrollments: <strong>@Model.TotalEnrollments</strong></p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Period</th>
+            <th>Enrollments</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Labels.Count; i++)
+        {
+            <tr>
+                <td>@Model.Labels[i]</td>
+                <td>@Model.Values[i]</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts {
+    <script>
+        var labels = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Labels));
+        var values = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Values));
+        console.log(labels, values);
+    </script>
+}

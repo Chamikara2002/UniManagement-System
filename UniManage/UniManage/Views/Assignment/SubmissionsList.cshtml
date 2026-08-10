@@ -1,0 +1,39 @@
+@model IEnumerable<UniManage.Models.AssignmentSubmission>
+@{
+    ViewBag.Title = "Submissions";
+}
+
+<h2>Submissions</h2>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<table class="table table-hover table-responsive">
+    <thead>
+        <tr>
+            <th>Student</th>
+            <th>Submitted On</th>
+            <th>Late</th>
+            <th>Grade</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var s in Model)
+        {
+            <tr>
+                <td>@s.Student?.User?.FullName</td>
+                <td>@s.SubmittedOn.ToLocalTime().ToString("g")</td>
+                <td>@(s.IsLate ? Html.Raw("<span class=\"badge badge-danger\">Late</span>") : Html.Raw("<span class=\"badge badge-success\">On time</span>"))</td>
+                <td>@(s.Grade != null ? "<span class=\"badge badge-info\">" + s.Grade.Score + "</span>" : "-")</td>
+                <td>@Html.ActionLink("Grade", "Grade", "Assignment", new { submissionId = s.Id }, new { @class = "btn btn-primary btn-sm" })</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,29 @@
+@using UniManage.Helpers
+<div class="panel panel-default">
+    <div class="panel-heading">Menu</div>
+    <div class="panel-body">
+        <ul class="nav nav-pills nav-stacked">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("Courses", "Index", "Course")</li>
+            @if (Request.IsAuthenticated)
+            {
+                if (User.IsInRole(RoleNames.Administrator))
+                {
+                    <li>@Html.ActionLink("Admin Dashboard", "Index", "Admin")</li>
+                    <li>@Html.ActionLink("Manage Users", "Index", "Admin")</li>
+                }
+                if (User.IsInRole(RoleNames.Lecturer))
+                {
+                    <li>@Html.ActionLink("Lecturer Dashboard", "Index", "Lecturer")</li>
+                    <li>@Html.ActionLink("My Courses", "MyCourses", "Lecturer")</li>
+                }
+                if (User.IsInRole(RoleNames.Student))
+                {
+                    <li>@Html.ActionLink("Student Dashboard", "Index", "Student")</li>
+                    <li>@Html.ActionLink("My Enrollments", "Index", "Enrollment")</li>
+                }
+                <li>@Html.ActionLink("Messages", "Index", "Message")</li>
+            }
+        </ul>
+    </div>
+</div>

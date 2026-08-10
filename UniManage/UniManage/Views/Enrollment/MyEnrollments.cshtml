@@ -1,0 +1,56 @@
+@model IEnumerable<UniManage.ViewModels.EnrollmentListItemViewModel>
+@{
+    ViewBag.Title = "My Enrollments";
+}
+
+<h2>My Enrollments</h2>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+@if (Model != null && Model.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Course</th>
+                <th>Enrolled On</th>
+                <th>Status</th>
+                <th>Seats Left</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var e in Model)
+            {
+                <tr>
+                    <td>@Html.ActionLink(e.CourseTitle, "CourseDetails", "Student", new { id = e.CourseId }, null)</td>
+                    <td>@e.EnrolledOn.ToLocalTime().ToString("g")</td>
+                    <td>@e.Status</td>
+                    <td>@e.SeatsLeft</td>
+                    <td>
+                        @if (e.Status == UniManage.Models.EnrollmentStatus.Enrolled)
+                        {
+                            using (Html.BeginForm("Drop", "Enrollment", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("courseId", e.CourseId)
+                                <button type="submit" class="btn btn-danger btn-sm">Drop</button>
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>You have no enrollments.</p>
+}

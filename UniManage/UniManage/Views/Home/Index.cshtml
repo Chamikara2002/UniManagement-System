@@ -1,0 +1,26 @@
+@{
+    ViewBag.Title = "Home";
+}
+
+<div class="jumbotron">
+    <h1>Welcome to UniManage</h1>
+    <p class="lead">A simple university course management system for coursework and demos.</p>
+    <p>
+        @Html.ActionLink("Browse Courses", "Index", "Course", null, new { @class = "btn btn-primary btn-lg" })
+    </p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h3>Students</h3>
+        <p>View your courses, submit assignments, and check grades.</p>
+    </div>
+    <div class="col-md-4">
+        <h3>Lecturers</h3>
+        <p>Create course materials, assignments, and grade submissions.</p>
+    </div>
+    <div class="col-md-4">
+        <h3>Administrators</h3>
+        <p>Manage users, courses, and system settings.</p>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+@model UniManage.Models.Course
+@{
+    ViewBag.Title = "Course Details";
+}
+
+<h2>@Model.Title (@Model.Code)</h2>
+<p>@Model.Description</p>
+<p><strong>Credits:</strong> @Model.Credits</p>
+<p><strong>Lecturer:</strong> @(Model.Lecturer != null && Model.Lecturer.User != null ? Model.Lecturer.User.FullName : "TBA")</p>
+<p><strong>Capacity:</strong> @Model.Capacity</p>
+<p><strong>Enrolled:</strong> @(Model.Enrollments != null ? Model.Enrollments.Count() : 0)</p>
+
+@if (Model.Prerequisites != null && Model.Prerequisites.Any())
+{
+    <h4>Prerequisites</h4>
+    <ul>
+        @foreach (var p in Model.Prerequisites)
+        {
+            <li>@p.PrerequisiteCourse.Title (@p.PrerequisiteCourse.Code)</li>
+        }
+    </ul>
+}
+
+@if (Model.Materials != null && Model.Materials.Any())
+{
+    <h4>Materials</h4>
+    <ul>
+        @foreach (var m in Model.Materials)
+        {
+            <li>@m.Title - <a href="@Url.Content(m.FilePath)">Download</a></li>
+        }
+    </ul>
+}
+
+<div>
+    @Html.ActionLink("Back to browse", "BrowseCourses", "Student", null, new { @class = "btn btn-default" })
+</div>

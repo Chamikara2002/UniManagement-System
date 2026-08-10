@@ -1,0 +1,30 @@
+@model IEnumerable<UniManage.ViewModels.WorkloadAnalysisViewModel>
+@{
+    ViewBag.Title = "Workload Analysis";
+}
+
+<h2>Workload Analysis</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Lecturer</th>
+            <th>Courses</th>
+            <th>Assignments</th>
+            <th>Submissions</th>
+            <th>Pending Grading</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var w in Model)
+        {
+            <tr>
+                <td>@w.LecturerName</td>
+                <td>@w.CoursesCount</td>
+                <td>@w.AssignmentsCount</td>
+                <td>@w.SubmissionsCount</td>
+                <td>@w.PendingGradingCount</td>
+            </tr>
+        }
+    </tbody>
+</table>

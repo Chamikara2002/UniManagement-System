@@ -1,0 +1,36 @@
+@model UniManage.ViewModels.AssignmentDetailsViewModel
+@{
+    ViewBag.Title = "Assignment Details";
+}
+
+<h2>@Model.Assignment.Title</h2>
+<p>@Model.Assignment.Description</p>
+<p><strong>Due:</strong> @Model.Assignment.DueDate.ToLocalTime().ToString("g")</p>
+<p><strong>Points:</strong> @Model.Assignment.Points</p>
+
+@if (User.IsInRole("Student"))
+{
+    if (Model.CanSubmit)
+    {
+        if (Model.StudentSubmission != null)
+        {
+            <div class="alert alert-info">You have submitted this assignment on @Model.StudentSubmission.SubmittedOn.ToLocalTime().ToString("g") (@Html.Raw(Model.StudentSubmission.IsLate ? "<span class=\"badge badge-danger\">Late</span>" : "<span class=\"badge badge-success\">On time</span>"))</div>
+            @Html.ActionLink("View/Update Submission", "Submit", "Assignment", new { id = Model.Assignment.Id }, new { @class = "btn btn-outline-primary" })
+        }
+        else
+        {
+            @Html.ActionLink("Submit Assignment", "Submit", "Assignment", new { id = Model.Assignment.Id }, new { @class = "btn btn-primary" })
+        }
+    }
+    else if (!Model.IsEnrolled)
+    {
+        <div class="alert alert-warning">You are not enrolled in this course.</div>
+    }
+}
+
+@if (Model.StudentSubmission != null && Model.StudentSubmission.Grade != null)
+{
+    <h4>Your Grade</h4>
+    <p><strong>Score:</strong> @Model.StudentSubmission.Grade.Score / @Model.Assignment.Points</p>
+    <p><strong>Feedback:</strong> @Model.StudentSubmission.Grade.Feedback</p>
+}

@@ -1,0 +1,37 @@
+@model IEnumerable<UniManage.Models.AssignmentSubmission>
+@{
+    ViewBag.Title = "Submissions";
+}
+
+<h2>Submissions</h2>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Student</th>
+                <th>Submitted On</th>
+                <th>File</th>
+                <th>Grade</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var s in Model)
+            {
+                <tr>
+                    <td>@s.Student?.User?.FullName</td>
+                    <td>@s.SubmittedOn.ToLocalTime().ToString("g")</td>
+                    <td><a href="@Url.Content(s.FilePath)">Download</a></td>
+                    <td>@(s.Grade != null ? s.Grade.Score.ToString() : "-")</td>
+                    <td>@Html.ActionLink("Grade", "GradeSubmission", new { submissionId = s.Id }, new { @class = "btn btn-primary btn-sm" })</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No submissions yet.</p>
+}

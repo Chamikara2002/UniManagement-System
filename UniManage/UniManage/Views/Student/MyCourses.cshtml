@@ -1,0 +1,37 @@
+@model IEnumerable<UniManage.Models.Course>
+@{
+    ViewBag.Title = "My Courses";
+}
+
+<h2>My Courses</h2>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Title</th>
+                <th>Lecturer</th>
+                <th>Credits</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in Model)
+            {
+                <tr>
+                    <td>@c.Code</td>
+                    <td>@Html.ActionLink(c.Title, "CourseDetails", "Student", new { id = c.Id }, null)</td>
+                    <td>@(c.Lecturer != null && c.Lecturer.User != null ? c.Lecturer.User.FullName : "TBA")</td>
+                    <td>@c.Credits</td>
+                    <td>@Html.ActionLink("Assignments", "MyAssignments", "Student", new { courseId = c.Id }, new { @class = "btn btn-default btn-sm" })</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>You have no enrolled courses.</p>
+}

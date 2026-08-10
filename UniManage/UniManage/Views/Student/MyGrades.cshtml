@@ -1,0 +1,35 @@
+@model IEnumerable<UniManage.Models.Grade>
+@{
+    ViewBag.Title = "My Grades";
+}
+
+<h2>My Grades</h2>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Assignment</th>
+                <th>Score</th>
+                <th>Feedback</th>
+                <th>Graded On</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var g in Model)
+            {
+                <tr>
+                    <td>@g.AssignmentSubmission?.Assignment?.Title</td>
+                    <td>@g.Score</td>
+                    <td>@g.Feedback</td>
+                    <td>@g.GradedOn.ToLocalTime().ToString("g")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No grades recorded yet.</p>
+}

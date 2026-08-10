@@ -1,0 +1,30 @@
+@model UniManage.ViewModels.CreateAssignmentViewModel
+@{
+    ViewBag.Title = "Create Assignment";
+}
+
+<h2>Create Assignment</h2>
+
+@using (Html.BeginForm("CreateAssignment", "Lecturer", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.CourseId)
+    <div class="form-group">
+        @Html.LabelFor(m => m.Title)
+        @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Title)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Description)
+        @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Points)
+        @Html.TextBoxFor(m => m.Points, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.DueDate)
+        @Html.TextBoxFor(m => m.DueDate, new { @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+}

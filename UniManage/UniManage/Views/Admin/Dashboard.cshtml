@@ -1,0 +1,71 @@
+@model UniManage.ViewModels.AdminDashboardViewModel
+@{
+    ViewBag.Title = "Admin Dashboard";
+}
+
+<h2>Admin Dashboard</h2>
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-title">Total Users</div>
+            <div class="stat text-primary">@Model.TotalUsers</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-title">Students</div>
+            <div class="stat text-success">@Model.TotalStudents</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-title">Lecturers</div>
+            <div class="stat text-info">@Model.TotalLecturers</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-title">Courses</div>
+            <div class="stat text-warning">@Model.TotalCourses</div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-title">Recent Courses</div>
+            <div class="card-body">
+                @if (Model.RecentCourses != null && Model.RecentCourses.Any())
+                {
+                    <table class="table table-hover table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Title</th>
+                                <th>Lecturer</th>
+                                <th>Created On</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var c in Model.RecentCourses)
+                            {
+                                <tr>
+                                    <td>@c.Code</td>
+                                    <td>@c.Title</td>
+                                    <td>@(c.Lecturer != null && c.Lecturer.User != null ? c.Lecturer.User.FullName : "TBA")</td>
+                                    <td>@c.CreatedOn.ToLocalTime().ToString("g")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p>No recent courses.</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>

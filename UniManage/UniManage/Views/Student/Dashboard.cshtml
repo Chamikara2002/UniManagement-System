@@ -1,0 +1,87 @@
+@model UniManage.ViewModels.StudentDashboardViewModel
+@{
+    ViewBag.Title = "Student Dashboard";
+}
+
+<h2>Student Dashboard</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-title">Enrolled Courses</div>
+            <div class="stat text-primary">@Model.EnrolledCoursesCount</div>
+            <small class="text-muted">Currently active courses</small>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-title">Upcoming Assignments</div>
+            <div class="stat text-warning">@Model.UpcomingAssignmentsCount</div>
+            <small class="text-muted">Due soon</small>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-title">Recent Grades</div>
+            <div class="stat text-success">@Model.LatestGrades?.Count() ?? 0</div>
+            <small class="text-muted">Latest graded items</small>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-title">Latest Grades</div>
+            @if (Model.LatestGrades != null && Model.LatestGrades.Any())
+            {
+                <table class="table table-hover table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Assignment</th>
+                            <th>Score</th>
+                            <th>Feedback</th>
+                            <th>Graded On</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var g in Model.LatestGrades)
+                        {
+                            <tr>
+                                <td>@g.AssignmentSubmission?.Assignment?.Title</td>
+                                <td><span class="badge">@g.Score</span> / @g.AssignmentSubmission?.Assignment?.Points</td>
+                                <td>@g.Feedback</td>
+                                <td>@g.GradedOn.ToLocalTime().ToString("g")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p class="text-muted">No grades yet.</p>
+            }
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-title">Recent Enrolled Courses</div>
+            @if (Model.Enrollments != null && Model.Enrollments.Any())
+            {
+                <ul class="list-group">
+                    @foreach (var e in Model.Enrollments.Take(5))
+                    {
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            @Html.ActionLink(e.Course.Title, "CourseDetails", "Student", new { id = e.CourseId }, null)
+                            <span class="badge badge-default">@e.EnrolledOn.ToLocalTime().ToString("d")</span>
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="text-muted">You are not enrolled in any courses.</p>
+            }
+        </div>
+    </div>
+</div>

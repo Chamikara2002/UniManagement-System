@@ -1,0 +1,28 @@
+@model UniManage.Models.Course
+@{
+    ViewBag.Title = "Course Details";
+}
+
+<h2>@Model.Title (@Model.Code)</h2>
+<p>@Model.Description</p>
+<p><strong>Lecturer:</strong> @(Model.Lecturer != null && Model.Lecturer.User != null ? Model.Lecturer.User.FullName : "TBA")</p>
+
+<h4>Materials</h4>
+@if (Model.Materials != null && Model.Materials.Any())
+{
+    <ul>
+        @foreach (var m in Model.Materials)
+        {
+            <li>@m.Title - <a href="@Url.Content(m.FilePath)">Download</a></li>
+        }
+    </ul>
+}
+else
+{
+    <p>No materials uploaded.</p>
+}
+
+<p>
+    @Html.ActionLink("Upload Material", "UploadMaterial", new { courseId = Model.Id }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Assignments", "Assignments", new { courseId = Model.Id }, new { @class = "btn btn-default" })
+</p>

@@ -1,0 +1,26 @@
+@model IEnumerable<UniManage.Models.Message>
+@{
+    ViewBag.Title = "Sent Messages";
+}
+
+<h2>Sent</h2>
+
+<table class="table table-hover table-responsive">
+    <thead>
+        <tr>
+            <th>To</th>
+            <th>Subject</th>
+            <th>Sent</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var m in Model)
+        {
+            <tr>
+                <td>@m.ToUser?.FullName</td>
+                <td>@Html.ActionLink(m.Subject, "Details", new { id = m.Id })</td>
+                <td>@m.SentOn.ToLocalTime().ToString("g")</td>
+            </tr>
+        }
+    </tbody>
+</table>

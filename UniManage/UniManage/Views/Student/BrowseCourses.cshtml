@@ -1,0 +1,70 @@
+@model IEnumerable<UniManage.ViewModels.CourseListItemViewModel>
+@{
+    ViewBag.Title = "Browse Courses";
+}
+
+<h2>Browse Courses</h2>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<table class="table table-striped table-hover table-responsive">
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Title</th>
+            <th>Lecturer</th>
+            <th>Credits</th>
+            <th>Seats Left</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in Model)
+        {
+            <tr>
+                <td>@c.Code</td>
+                <td>@Html.ActionLink(c.Title, "CourseDetails", "Student", new { id = c.Id }, null)</td>
+                <td>@c.LecturerName</td>
+                <td>@c.Credits</td>
+                <td>@c.SeatsLeft</td>
+                <td>
+                    @if (c.IsEnrolled)
+                    {
+                        <span class="badge badge-success">Enrolled</span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-secondary">Not enrolled</span>
+                    }
+                </td>
+                <td>
+                    @if (!c.IsEnrolled && c.SeatsLeft > 0)
+                    {
+                        @using (Html.BeginForm("Enroll", "Enrollment", FormMethod.Post, new { @class = "d-inline" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.Hidden("courseId", c.Id)
+                            <button type="submit" class="btn btn-success btn-sm">Enroll</button>
+                        }
+                    }
+                    else if (!c.IsEnrolled && c.SeatsLeft == 0)
+                    {
+                        <span class="text-muted">Full</span>
+                    }
+                    else
+                    {
+                        @Html.ActionLink("View", "CourseDetails", "Student", new { id = c.Id }, new { @class = "btn btn-outline-secondary btn-sm" })
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

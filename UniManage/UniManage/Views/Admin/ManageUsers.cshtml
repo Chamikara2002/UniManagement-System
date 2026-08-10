@@ -1,0 +1,28 @@
+@model IEnumerable<UniManage.Models.ApplicationUser>
+@{
+    ViewBag.Title = "Manage Users";
+}
+
+<h2>Manage Users</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>UserName</th>
+            <th>Email</th>
+            <th>Active</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var u in Model)
+        {
+            <tr>
+                <td>@u.UserName</td>
+                <td>@u.Email</td>
+                <td>@(u.IsActive ? "Yes" : "No")</td>
+                <td>@Html.ActionLink("Edit", "EditUser", new { id = u.Id })</td>
+            </tr>
+        }
+    </tbody>
+</table>

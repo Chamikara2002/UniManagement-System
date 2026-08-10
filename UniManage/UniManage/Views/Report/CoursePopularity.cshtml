@@ -1,0 +1,36 @@
+@model IEnumerable<UniManage.ViewModels.CoursePopularityViewModel>
+@{
+    ViewBag.Title = "Course Popularity";
+}
+
+<h2>Course Popularity</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Course</th>
+            <th>Code</th>
+            <th>Enrolled</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in Model)
+        {
+            <tr>
+                <td>@c.Title</td>
+                <td>@c.Code</td>
+                <td>@c.EnrolledCount</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Chart-ready data -->
+@section scripts {
+    <script>
+        var labels = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(m => m.Code)));
+        var values = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(m => m.EnrolledCount)));
+        // Developer can plug into Chart.js or similar
+        console.log(labels, values);
+    </script>
+}
